@@ -8,7 +8,7 @@ import {
   DataSourceJsonData,
   LoadingState,
 } from '@grafana/data';
-import { DataSourceWithBackend } from '@grafana/runtime';
+import { BackendSrvRequest, DataSourceWithBackend, getBackendSrv } from '@grafana/runtime';
 import { TraceToLogsOptions } from 'app/core/components/TraceToLogsSettings';
 import { getDatasourceSrv } from 'app/features/plugins/datasource_srv';
 import { from, merge, Observable, of, throwError } from 'rxjs';
@@ -42,7 +42,7 @@ export class TempoDatasource extends DataSourceWithBackend<TempoQuery, TempoJson
   };
   uploadedJson?: string | ArrayBuffer | null = null;
 
-  constructor(instanceSettings: DataSourceInstanceSettings<TempoJsonData>) {
+  constructor(private instanceSettings: DataSourceInstanceSettings<TempoJsonData>) {
     super(instanceSettings);
     this.tracesToLogs = instanceSettings.jsonData.tracesToLogs;
     this.serviceMap = instanceSettings.jsonData.serviceMap;
@@ -118,19 +118,18 @@ export class TempoDatasource extends DataSourceWithBackend<TempoQuery, TempoJson
   }
 
   async testDatasource(): Promise<any> {
-    // to test Tempo we send a dummy traceID and verify Tempo answers with 'trace not found'
-    const response = await super.query({ targets: [{ query: '0' }] } as any).toPromise();
+    const options: BackendSrvRequest = {
+      headers: {},
+      method: 'GET',
+      url: `${this.instanceSettings.url}/api/echo`,
+    };
+    const response = await getBackendSrv().fetch<any>(options).toPromise();
 
-    const errorMessage = response.error?.message;
-    if (
-      errorMessage &&
-      errorMessage.startsWith('failed to get trace') &&
-      errorMessage.endsWith('trace not found in Tempo')
-    ) {
+    if (response.ok) {
       return { status: 'success', message: 'Data source is working' };
     }
 
-    return { status: 'error', message: 'Data source is not working' + (errorMessage ? `: ${errorMessage}` : '') };
+    return { status: 'error', message: 'Data source is not working' };
   }
 
   getQueryDisplayText(query: TempoQuery) {
