@@ -3003,7 +3003,7 @@
           "type": "string"
         },
         "relativeTimeRange": {
-          "$ref": "#/definitions/RelativeTimeRange"
+          "$ref": "#/definitions/RelativeTimeRangeExport"
         }
       }
     },
@@ -4091,6 +4091,12 @@
             "$ref": "#/definitions/GettableGrafanaReceiver"
           }
         },
+        "msteams_configs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MSTeamsConfig"
+          }
+        },
         "name": {
           "description": "A unique identifier for this receiver.",
           "type": "string"
@@ -4123,12 +4129,6 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/SNSConfig"
-          }
-        },
-        "teams_configs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MSTeamsConfig"
           }
         },
         "telegram_configs": {
@@ -5158,6 +5158,12 @@
             "$ref": "#/definitions/PostableGrafanaReceiver"
           }
         },
+        "msteams_configs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MSTeamsConfig"
+          }
+        },
         "name": {
           "description": "A unique identifier for this receiver.",
           "type": "string"
@@ -5190,12 +5196,6 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/SNSConfig"
-          }
-        },
-        "teams_configs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MSTeamsConfig"
           }
         },
         "telegram_configs": {
@@ -5622,6 +5622,9 @@
         "token_file": {
           "type": "string"
         },
+        "ttl": {
+          "type": "string"
+        },
         "url": {
           "type": "string"
         },
@@ -5739,6 +5742,12 @@
             "$ref": "#/definitions/EmailConfig"
           }
         },
+        "msteams_configs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MSTeamsConfig"
+          }
+        },
         "name": {
           "description": "A unique identifier for this receiver.",
           "type": "string"
@@ -5771,12 +5780,6 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/SNSConfig"
-          }
-        },
-        "teams_configs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MSTeamsConfig"
           }
         },
         "telegram_configs": {
@@ -5843,6 +5846,19 @@
         },
         "to": {
           "$ref": "#/definitions/Duration"
+        }
+      }
+    },
+    "RelativeTimeRangeExport": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "to": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
@@ -6941,7 +6957,6 @@
       }
     },
     "alertGroup": {
-      "description": "AlertGroup alert group",
       "type": "object",
       "required": [
         "alerts",
@@ -7185,6 +7200,7 @@
       "$ref": "#/definitions/gettableSilence"
     },
     "gettableSilences": {
+      "description": "GettableSilences gettable silences",
       "type": "array",
       "items": {
         "$ref": "#/definitions/gettableSilence"
@@ -7336,7 +7352,6 @@
       }
     },
     "postableSilence": {
-      "description": "PostableSilence postable silence",
       "type": "object",
       "required": [
         "comment",
@@ -7375,7 +7390,6 @@
       "$ref": "#/definitions/postableSilence"
     },
     "receiver": {
-      "description": "Receiver receiver",
       "type": "object",
       "required": [
         "active",

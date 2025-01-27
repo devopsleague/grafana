@@ -137,7 +137,7 @@
      "type": "string"
     },
     "relativeTimeRange": {
-     "$ref": "#/definitions/RelativeTimeRange"
+     "$ref": "#/definitions/RelativeTimeRangeExport"
     }
    },
    "title": "AlertQueryExport is the provisioned export of models.AlertQuery.",
@@ -1223,6 +1223,12 @@
      },
      "type": "array"
     },
+    "msteams_configs": {
+     "items": {
+      "$ref": "#/definitions/MSTeamsConfig"
+     },
+     "type": "array"
+    },
     "name": {
      "description": "A unique identifier for this receiver.",
      "type": "string"
@@ -1254,12 +1260,6 @@
     "sns_configs": {
      "items": {
       "$ref": "#/definitions/SNSConfig"
-     },
-     "type": "array"
-    },
-    "teams_configs": {
-     "items": {
-      "$ref": "#/definitions/MSTeamsConfig"
      },
      "type": "array"
     },
@@ -2289,6 +2289,12 @@
      },
      "type": "array"
     },
+    "msteams_configs": {
+     "items": {
+      "$ref": "#/definitions/MSTeamsConfig"
+     },
+     "type": "array"
+    },
     "name": {
      "description": "A unique identifier for this receiver.",
      "type": "string"
@@ -2320,12 +2326,6 @@
     "sns_configs": {
      "items": {
       "$ref": "#/definitions/SNSConfig"
-     },
-     "type": "array"
-    },
-    "teams_configs": {
-     "items": {
-      "$ref": "#/definitions/MSTeamsConfig"
      },
      "type": "array"
     },
@@ -2753,6 +2753,9 @@
     "token_file": {
      "type": "string"
     },
+    "ttl": {
+     "type": "string"
+    },
     "url": {
      "type": "string"
     },
@@ -2869,6 +2872,12 @@
      },
      "type": "array"
     },
+    "msteams_configs": {
+     "items": {
+      "$ref": "#/definitions/MSTeamsConfig"
+     },
+     "type": "array"
+    },
     "name": {
      "description": "A unique identifier for this receiver.",
      "type": "string"
@@ -2900,12 +2909,6 @@
     "sns_configs": {
      "items": {
       "$ref": "#/definitions/SNSConfig"
-     },
-     "type": "array"
-    },
-    "teams_configs": {
-     "items": {
-      "$ref": "#/definitions/MSTeamsConfig"
      },
      "type": "array"
     },
@@ -2974,6 +2977,19 @@
     },
     "to": {
      "$ref": "#/definitions/Duration"
+    }
+   },
+   "type": "object"
+  },
+  "RelativeTimeRangeExport": {
+   "properties": {
+    "from": {
+     "format": "int64",
+     "type": "integer"
+    },
+    "to": {
+     "format": "int64",
+     "type": "integer"
     }
    },
    "type": "object"
@@ -4073,7 +4089,6 @@
    "type": "object"
   },
   "alertGroup": {
-   "description": "AlertGroup alert group",
    "properties": {
     "alerts": {
      "description": "alerts",
@@ -4312,6 +4327,7 @@
    "type": "object"
   },
   "gettableSilences": {
+   "description": "GettableSilences gettable silences",
    "items": {
     "$ref": "#/definitions/gettableSilence"
    },
@@ -4461,7 +4477,6 @@
    "type": "array"
   },
   "postableSilence": {
-   "description": "PostableSilence postable silence",
    "properties": {
     "comment": {
      "description": "comment",
@@ -4499,7 +4514,6 @@
    "type": "object"
   },
   "receiver": {
-   "description": "Receiver receiver",
    "properties": {
     "active": {
      "description": "active",
